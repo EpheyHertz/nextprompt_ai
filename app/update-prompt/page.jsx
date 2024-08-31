@@ -1,12 +1,12 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Suspense } from 'react';
 import { useSession } from 'next-auth/react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Form from '@components/form';
 
-const EditPrompt = () => {
-  const Router = useRouter();
+const EditPromptContent = () => {
+  const router = useRouter();
   const { data: session } = useSession();
   const searchParams = useSearchParams();
   const [submitting, setSubmitting] = useState(false);
@@ -35,13 +35,18 @@ const EditPrompt = () => {
     };
     getPromptDetails();
   }, [promptId]);
-if(!promptId) return alert('Prompt not found!')
+
+  if (!promptId) {
+    alert('Prompt not found!');
+    return null; // Or you could redirect to a 404 page
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setSubmitting(true);
     try {
       const response = await fetch(`/api/prompts/${promptId}`, {
-        method: 'PATCH', // Use PUT for updates
+        method: 'PATCH', // Use PATCH for updates
         headers: {
           'Content-Type': 'application/json',
         },
@@ -53,7 +58,7 @@ if(!promptId) return alert('Prompt not found!')
       if (!response.ok) {
         throw new Error('Failed to update prompt');
       }
-      Router.push('/');
+      router.push('/');
     } catch (error) {
       console.error('Error updating prompt:', error);
     } finally {
@@ -71,5 +76,11 @@ if(!promptId) return alert('Prompt not found!')
     />
   );
 };
+
+const EditPrompt = () => (
+  <Suspense fallback={<div>Loading...</div>}>
+    <EditPromptContent />
+  </Suspense>
+);
 
 export default EditPrompt;
