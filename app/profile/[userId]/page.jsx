@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Profile from '@components/profile';
-import GeminiForm from '@components/GeminiForm';  // Import the Gemini form component
+import GeminiForm from '@components/geminiForm';  // Import the Gemini form component
 import { useSession } from 'next-auth/react';
 
 const UserProfile = ({ params }) => {
