@@ -1,6 +1,6 @@
-"use client";
-
+'use client'
 import Link from 'next/link';
+import Router from 'next/router';
 import Image from 'next/image';
 import { useState, useEffect } from 'react';
 import { signIn, signOut, useSession, getProviders } from 'next-auth/react';
@@ -18,6 +18,22 @@ const Nav = () => {
 
         fetchProviders();
     }, []);
+
+    const handleGenerateClick = () => {
+        // Your logic for generating with Gemini AI goes here
+        console.log('Generate with Gemini AI clicked!');
+        // Example: You could navigate to a specific page or call an API
+        try {
+            // If you need to make an API call, you can do it here
+            // Example: await fetch('/api/generate-with-gemini', { method: 'POST' });
+
+            // Navigate to the page after processing
+            Router.push('/generate_gemini');
+        } catch (error) {
+            console.error('Error While connecting to Gemini AI:', error);
+        }
+         
+    };
 
     return (
         <nav className='flex-between w-full mb-16 pt-3'>
@@ -41,6 +57,10 @@ const Nav = () => {
                         <Link href="/contact" className='black_btn'>
                             Contact Us
                         </Link>
+                        <Link href="/generate_gemini" className='black_btn'>
+                           Generate With Gemini
+                        </Link>
+                        
                         <button type='button' onClick={signOut} className='outline_btn'>
                             Sign Out
                         </button>
@@ -101,6 +121,14 @@ const Nav = () => {
                                 >
                                     Contact Us
                                 </Link>
+                                <Link
+                                    href="/generate_gemini"
+                                    className='dropdown_link'
+                                    onClick={() => setToggleDropdown(false)}
+                                >
+                                    Generate With Gemini
+                                </Link>
+                               
                                 <button
                                     type='button'
                                     className=' mt-5 w-full black_btn'

@@ -56,7 +56,7 @@ export const POST = async (req) => {
     };
 
     // Log incoming request data for debugging
-    console.log('Request received with prompt:', prompt);
+    // console.log('Request received with prompt:', prompt);
 
     // Generate content using the retry-enabled function
     const result = await generateContent(transcriptionText, generationConfig);
